@@ -8,8 +8,30 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola Mi Amor</h1>
-   
+    <div class="container">
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Desc.</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for peli in pelis %}
+                <tr>
+                    <td>{{peli[0]}}</td>
+                    <td>{{peli[3]}}</td>
+                    <td>{{peli[1]}}</td>
+                    <td>{{peli[2]}}</td>
+                    <td><a href="/edit/{{peli[0]}}">Editar</a> | <a href="/destroy/{{peli[0]}}">Borrar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
 </body>
 </html>
