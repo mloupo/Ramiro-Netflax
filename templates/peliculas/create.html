@@ -1,4 +1,7 @@
-<form method="post" action="/store" enctype="multipart/form-data">
+{% include 'header.html' %}
+<h2>Form para Crear</h2>
+
+<form class=" "method="post" action="/store" enctype="multipart/form-data">
 
     <label for="txtNombre">Nombre:</label>
     <input type="text" name="txtNombre" id="txtNombre">
@@ -10,5 +13,6 @@
     <input type="file" name="txtImagen" id="txtImagen">
     <br>
     <br>
-    <input type="submit" value="Agregar Peli">
+    <input type="submit" value="Agregar">
 </form>
+{% include 'footer.html' %}

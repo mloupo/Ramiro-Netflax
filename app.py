@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask import render_template, request, redirect
 from flaskext.mysql import MySQL
@@ -15,6 +16,8 @@ app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_BD'] = 'netflax_22068'
 mysql.init_app(app)
 
+CARPETA = os.path.join('uploads')
+app.config['CARPETA'] = CARPETA
 
 @app.route('/')
 def index():
@@ -57,9 +60,17 @@ def store():
 def destroy(id):
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM netflax_22068.peliculas WHERE id=%s", (id))
+    
+    # eliminar la imagen de uploads 
+    cursor.execute("SELECT imagen FROM netflax_22068.peliculas WHERE id= %s", id)
+    img = cursor.fetchone()    
+    os.remove(os.path.join(app.config['CARPETA'], img[0]))
+    
+    cursor.execute("DELETE FROM netflax_22068.peliculas WHERE id=%s", id)
     conn.commit()
     return redirect('/')
+
+
 
 
 @app.route('/edit/<int:id>')
@@ -71,6 +82,53 @@ def edit(id):
     peli = cursor.fetchone()
     
     return render_template('peliculas/edit.html', peli=peli)
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    _nombre = request.form['txtNombre']
+    _desc = request.form['txtDesc']
+    _foto = request.files['txtImagen']
+    _id = request.form['txtID']
+    
+    now = datetime.now()
+    tiempo = now.strftime("%Y%H%M%S")
+    if _foto.filename !='':
+        nuevo_nombre_foto = tiempo + _foto.filename
+        _foto.save("uploads/" + nuevo_nombre_foto)    
+            
+    conn = mysql.connect()
+    cursor = conn.cursor()   
+    
+    cursor.execute("SELECT imagen FROM netflax_22068.peliculas WHERE id= %s", _id)
+    img = cursor.fetchone()    
+    os.remove(os.path.join(app.config['CARPETA'], img[0]))
+    
+    sql = "UPDATE netflax_22068.peliculas SET `nombre`= %s,`descripcion`= %s,`imagen`= %s WHERE `id` = %s;"
+    datos = (_nombre, _desc, nuevo_nombre_foto, _id)
+    
+    cursor.execute(sql, datos)
+    conn.commit()
+     
+     
+     # return render_template('peliculas/index.html')
+    return redirect('/')
+    
+    
+    
+
+        
+    
+    
+   
+
+
+
+
+
+
+
+
 
 
 # http://127.0.0.1:5000

@@ -1,5 +1,25 @@
-Form para editar
-{{peli[0]}} <!--id-->
-{{peli[1]}} <!--Nombre-->
-{{peli[2]}} <!--Desc.-->
-{{peli[3]}} <!--Imagen-->
+
+<!-- 
+{{peli[0]}} id
+{{peli[1]}} Nombre
+{{peli[2]}} Desc.
+{{peli[3]}} Imagen 
+-->
+{% include 'header.html' %}
+ <h2>Form para Editar</h2>
+<form method="post" action="/update" enctype="multipart/form-data">
+    <label for="txtID">Id:</label>
+    <input type="text" value="{{peli[0]}}" name="txtID" id="txtID"> <!-- id -->
+    <br>
+    <label for="txtNombre">Nombre:</label>
+    <input type="text" value="{{peli[1]}}" name="txtNombre" id="txtNombre">
+    <br>
+    <label for="txtDesc">Descripcion:</label>
+    <input type="text" value="{{peli[2]}}" name="txtDesc"  id="txtDesc">
+    <br>
+    <label for="txtImagen">Imagen:</label>
+    <input type="file" value="{{peli[3]}}" name="txtImagen" id="txtImagen">
+    <br>
+    <input type="submit" value="Actualizar">
+</form>
+{% include 'footer.html' %}
