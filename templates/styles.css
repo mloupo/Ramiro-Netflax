@@ -1,0 +1,45 @@
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+ }
+ .footer h4{
+    font-size: 14px;
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 400;
+ }
+ 
+  p{
+     color: #888;
+     font-size: 14px;
+     font-weight: 300;
+     line-height: 22px;
+     padding: 1px;
+ }
+ 
+ .icons .fab{   
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 12px 0;
+ }
+ 
+ #instagram{
+     color: #a52687; 
+ }
+ 
+ #facebook{
+     color: #186aa8; 
+ }
+ #messenger{
+     color: #186aa8; 
+ }
+ 
+ #twitter{
+     color: #1ea2fa; 
+ } 
+ #love{ color:#d63d3d
+ }
+ #gitlab{ color: #000;
+ 
+ }

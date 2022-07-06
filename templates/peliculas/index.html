@@ -14,10 +14,12 @@
                 {% for peli in pelis %}
                 <tr>
                     <td>{{peli[0]}}</td>
-                    <td>{{peli[3]}}</td>
+                    <td><img src="uploads/{{peli[3]}}" alt="" width="100"class="img-thumbnail"></td>
+                    <!-- <td>{{peli[3]}}</td> -->
                     <td>{{peli[1]}}</td>
                     <td>{{peli[2]}}</td>
-                    <td><a href="/edit/{{peli[0]}}">Editar</a> | <a href="/destroy/{{peli[0]}}">Borrar</a></td>
+                    
+                    <td><a class="btn btn-warning" href="/edit/{{peli[0]}}">Editar</a>  <a class="btn btn-danger" onclick="return confirm('Realmente desea eleminar el registro?')" btn href="/destroy/{{peli[0]}}">Borrar</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

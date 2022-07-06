@@ -5,21 +5,44 @@
 {{peli[2]}} Desc.
 {{peli[3]}} Imagen 
 -->
+
+
 {% include 'header.html' %}
- <h2>Form para Editar</h2>
-<form method="post" action="/update" enctype="multipart/form-data">
-    <label for="txtID">Id:</label>
-    <input type="text" value="{{peli[0]}}" name="txtID" id="txtID"> <!-- id -->
-    <br>
-    <label for="txtNombre">Nombre:</label>
-    <input type="text" value="{{peli[1]}}" name="txtNombre" id="txtNombre">
-    <br>
-    <label for="txtDesc">Descripcion:</label>
-    <input type="text" value="{{peli[2]}}" name="txtDesc"  id="txtDesc">
-    <br>
-    <label for="txtImagen">Imagen:</label>
-    <input type="file" value="{{peli[3]}}" name="txtImagen" id="txtImagen">
-    <br>
-    <input type="submit" value="Actualizar">
-</form>
+
+<div class="card">
+    <div class="card-header">
+        ingresar pelicula
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Datos de la pelicula</h5>
+        <p class="card-text">
+        <form method="post" action="/update" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label for="txtID">ID:</label>
+            <input id="txtID" type="text" value="{{peli[0]}}" name="txtID" > <!-- id -->
+        </div>
+    
+        <div class="form-group">
+            <label for="txtNombre">Nombre:</label>
+            <input id="txtNombre" type="text" value="{{peli[1]}}" name="txtNombre" >
+        </div>
+
+        <div class="form-group">
+            <label for="txtDesc">Descripcion:</label>
+            <input type="text" value="{{peli[2]}}" name="txtDesc"  id="txtDesc">
+        </div>
+
+        <div class="form-group">
+            <label for="txtImagen">Img:</label>
+            <img class="img-thumbnail" width="100" src="{{url_for('uploads', nombreImg=peli[3])}}" alt="">
+            <input type="file" value="{{peli[3]}}" name="txtImagen" id="txtImagen">
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Actualizar">
+            <a href="{{url_for('index')}}" class="btn btn-info">Volver</a>
+        </div>
+    </form>
+</div>
 {% include 'footer.html' %}

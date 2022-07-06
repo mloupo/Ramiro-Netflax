@@ -1,13 +1,15 @@
 import os
 from flask import Flask
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for, flash
 from flaskext.mysql import MySQL
 from datetime import datetime
+from flask import send_from_directory
 
-from pkg_resources import resource_stream
 
 
 app = Flask(__name__)
+app.secret_key='Clave'
+
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
@@ -19,6 +21,11 @@ mysql.init_app(app)
 CARPETA = os.path.join('uploads')
 app.config['CARPETA'] = CARPETA
 
+@app.route('/uploads/<nombreImg>')
+def uploads (nombreImg):
+    return send_from_directory(app.config['CARPETA'], nombreImg)
+
+
 @app.route('/')
 def index():
     sql = "SELECT * FROM netflax_22068.peliculas;"
@@ -26,7 +33,7 @@ def index():
     cursor = conn.cursor()
     cursor.execute(sql)
     pelis = cursor.fetchall()
-    # print(pelis)
+    print(pelis,"p/ver si hay conexion")
     return render_template('peliculas/index.html', pelis=pelis)
 
 
@@ -40,6 +47,10 @@ def store():
     _nombre = request.form['txtNombre']
     _desc = request.form['txtDesc']
     _foto = request.files['txtImagen']
+    if _nombre =='' or _desc == '' or _foto == '':
+        flash("Faltan datos obligatorios!!")
+        return redirect(url_for('create'))
+    
     now = datetime.now()
     tiempo = now.strftime("%Y%H%M%S")
     if _foto.filename != '':
