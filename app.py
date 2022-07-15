@@ -15,7 +15,7 @@ mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_BD'] = 'netflax_22068'
+app.config['MYSQL_DATABASE_BD'] = 'pasteleriabd'
 mysql.init_app(app)
 
 CARPETA = os.path.join('uploads')
@@ -28,7 +28,7 @@ def uploads (nombreImg):
 
 @app.route('/')
 def index():
-    sql = "SELECT * FROM netflax_22068.peliculas;"
+    sql = "SELECT * FROM pasteleriabd.producto;"
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -47,7 +47,9 @@ def store():
     _nombre = request.form['txtNombre']
     _desc = request.form['txtDesc']
     _foto = request.files['txtImagen']
-    if _nombre =='' or _desc == '' or _foto == '':
+    _precioCosto = request.files['txtPrecioCosto']
+    _precioVenta = request.files['txtPrecioVenta']
+    if _nombre =='' or _desc == '' or _foto == ''or _precioCosto == ''or _precioVenta == '':
         flash("Faltan datos obligatorios!!")
         return redirect(url_for('create'))
     
@@ -57,8 +59,8 @@ def store():
         nuevo_nombre_foto = tiempo + _foto.filename
         _foto.save("uploads/" + nuevo_nombre_foto)
         
-    datos = (_nombre, _desc, nuevo_nombre_foto)
-    sql = "INSERT INTO netflax_22068.peliculas(`nombre`, `descripcion`, `imagen`) VALUES (%s,%s,%s)"
+    datos = (_nombre, _desc, nuevo_nombre_foto, _precioCosto, _precioVenta)
+    sql = "INSERT INTO netflax_22068.peliculas(`nombre_producto`, `descripcion_producto`, `precio_costo`, `precio_venta`) VALUES (%s,%s,%s,%s,%s)"
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql, datos)
